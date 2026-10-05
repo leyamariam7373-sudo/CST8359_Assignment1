@@ -1,0 +1,101 @@
+﻿@model CST8359_Assignment1.Models.Event
+
+@{
+    ViewData["Title"] = "Manage Attendees";
+}
+
+<div class="container">
+
+    <h1>Manage Attendees – @Model.Title</h1>
+
+    @if (TempData["Message"] != null)
+    {
+        <div class="alert alert-info">
+            @TempData["Message"]
+        </div>
+    }
+
+    <div class="card p-3 mb-4">
+
+        <h2>Sign Up for @Model.Title</h2>
+
+        <form asp-controller="Event"
+              asp-action="Signup"
+              method="post">
+
+            <input type="hidden"
+                   name="id"
+                   value="@Model.Id" />
+
+            <div class="mb-3">
+
+                <label class="form-label">
+                    Name
+                </label>
+
+                <input type="text"
+                       name="Name"
+                       class="form-control"
+                       required />
+
+            </div>
+
+            <div class="mb-3">
+
+                <label class="form-label">
+                    Email
+                </label>
+
+                <input type="email"
+                       name="Email"
+                       class="form-control"
+                       required />
+
+            </div>
+
+            <button type="submit"
+                    class="btn btn-success">
+
+                Sign Up
+
+            </button>
+
+            <a asp-controller="Event"
+               asp-action="Index"
+               class="btn btn-secondary">
+
+                Back to Events
+
+            </a>
+
+        </form>
+
+    </div>
+
+    <h2>
+        Current Attendees (@Model.Attendees.Count)
+    </h2>
+
+    @if (Model.Attendees.Count == 0)
+    {
+        <p>No attendees yet.</p>
+    }
+    else
+    {
+        <div class="list-group">
+
+            @foreach (var attendee in Model.Attendees)
+            {
+                <div class="list-group-item">
+
+                    <strong>@attendee.Name</strong>
+
+                    (@attendee.Email)
+
+                </div>
+            }
+
+        </div>
+    }
+
+</div>
